@@ -28,7 +28,7 @@ void bluetooth::addDevice(const QBluetoothDeviceInfo &info)
 {
     if(info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
-        if(info.name() == "Kastmine")
+        if(info.name().contains("Kastmine"))
         {
             QBluetoothDeviceInfo inf = info;
             Device *dev = new Device(inf);
