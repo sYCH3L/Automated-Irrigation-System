@@ -4,11 +4,6 @@ DataHandler::DataHandler(QObject *parent) : QObject(parent)
 {
 
 }
-DataHandler::~DataHandler()
-{
-
-}
-
 bool DataHandler::WriteData(QString id, HumidtyData dat)
 {
     Data tmp(id);

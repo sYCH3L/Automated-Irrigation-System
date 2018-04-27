@@ -27,16 +27,16 @@ SOURCES += \
         main.cpp \
         wateringgui.cpp \
     control.cpp \
-    datahandler.cpp \
     bluetooth.cpp \
-    device.cpp
+    device.cpp \
+    datahandler.cpp
 
 HEADERS += \
         wateringgui.h \
     control.h \
-    datahandler.h \
     bluetooth.h \
-    device.h
+    device.h \
+    datahandler.h
 
 FORMS += \
         wateringgui.ui

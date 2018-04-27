@@ -1,6 +1,7 @@
 #ifndef DATAHANDLER_H
 #define DATAHANDLER_H
 
+
 #include <QObject>
 #include <QString>
 #include <QDateTime>
@@ -35,16 +36,19 @@ private:
 
 };
 
+
 class DataHandler : public QObject
 {
     Q_OBJECT
 public:
-    DataHandler(QObject *parent = nullptr);
-    ~DataHandler();
+    explicit DataHandler(QObject *parent = nullptr);
     Data getData(QString id);
     bool WriteData(QString id, HumidtyData dat);
 private:
     QList<Data> dataHolder;
+signals:
+
+public slots:
 };
 
 #endif // DATAHANDLER_H
