@@ -52,7 +52,7 @@ void Control::registerNewDevice(QString id)
 }
 void Control::sendHumidty(QString id)
 {
-    blHndlr->write(id,QString("HUMIDITY"));
+    blHndlr->write(id,QString("getHumidity"));
 }
 
 void Control::deviceDisconnected(QString id)
@@ -77,7 +77,7 @@ void Control::connectDevice(QString id)
     }
     else if(!isWaitingToBeRegistered(id))
     {
-         blHndlr->write(id,"HUMIDITY");
+         sendHumidty(id);
     }
 }
 bool Control::deviceExists(QString id)
