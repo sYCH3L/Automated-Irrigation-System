@@ -23,7 +23,7 @@ private:
 class Data {
 public:
     Data(QString ID) : m_deviceID(ID){}
-    bool appData(HumidtyData t) { humData.append(t); }
+    void appData(HumidtyData t) { humData.append(t); }
     QString getID() { return m_deviceID; }
     bool hasData() { return (humData.size() > 0) ? true : false; }
     QString getLatestTimeStamp() { if(hasData()) {return humData.last().getTimeStamp(); } return QString("No Data"); }

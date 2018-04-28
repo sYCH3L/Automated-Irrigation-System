@@ -12,7 +12,7 @@
 class Devices : public QObject {
     Q_OBJECT
 public:
-    Devices(QString ID, QObject *parent = nullptr) : m_id(ID) {
+    Devices(QString ID, QObject *parent = nullptr) : QObject(parent), m_id(ID) {
         m_connected = true;
         m_lastUpdate = QDateTime::currentDateTime().toString();
         m_reqHum = 50.0;
