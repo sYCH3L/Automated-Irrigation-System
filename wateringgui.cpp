@@ -1,11 +1,14 @@
 #include "wateringgui.h"
 #include "ui_wateringgui.h"
 
-WateringGUI::WateringGUI(QWidget *parent) :
+WateringGUI::WateringGUI(QString ver, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::WateringGUI)
 {
     ui->setupUi(this);
+
+    ui->label_13->setText(ver);
+
     cntrlThread = new QThread();
     cntrl = new Control();
     cntrl->moveToThread(cntrlThread);

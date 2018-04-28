@@ -14,7 +14,7 @@ class WateringGUI : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit WateringGUI(QWidget *parent = 0);
+    explicit WateringGUI(QString ver,QWidget *parent = 0);
     ~WateringGUI();
     Control *cntrl;
     QThread *cntrlThread;
