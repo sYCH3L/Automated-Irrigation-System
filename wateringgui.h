@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <control.h>
 #include <QThread>
+#include <QtCharts>
 
 namespace Ui {
 class WateringGUI;

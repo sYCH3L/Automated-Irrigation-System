@@ -28,7 +28,7 @@ public:
     bool hasData() { return (humData.size() > 0) ? true : false; }
     QString getLatestTimeStamp() { if(hasData()) {return humData.last().getTimeStamp(); } return QString("No Data"); }
     QString getLatestValue() { if(hasData()) { return QString(QString::number(humData.last().getValue())); } return QString("No Data"); }
-
+    QList<HumidtyData> getList() { return humData; }
 
 private:
       QString m_deviceID;
