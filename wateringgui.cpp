@@ -90,16 +90,22 @@ void WateringGUI::loadsFrame(QString id)
     Data tmp = cntrl->dataHndlr->getData(id);
     if(tmp.hasData())
     {
-        //Delete old widget
-        ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
-
-
         QLineSeries *series = new QLineSeries();
         QList<HumidtyData> list = tmp.getList();
+
+        //Delete old widget
+        ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
+        ui->listWidget_2->clear();
+
+
+
+
+        // create charts && add dates irrigated
         for(auto a : list)
         {
             QDateTime date = QDateTime::fromString(a.getTimeStamp());
             series->append(date.toMSecsSinceEpoch(),a.getValue());
+            ui->listWidget_2->addItem(a.getTimeStamp());
         }
 
         QChart *chart = new QChart();

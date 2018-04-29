@@ -115,6 +115,12 @@ void Control::chooseAction(QString id, double hum)
         {
             if(dataHndlr->WriteData(id, HumidtyData(QDateTime::currentDateTime().toString(),hum)))
             {
+                auto tmz = getSettings(id);
+                if(tmz != NULL)
+                {
+                    getSettings(id)->setLastHum(hum);
+                    getSettings(id)->setLastUpdt(QDateTime::currentDateTime().toString());
+                }
                 initIrrigation(device->getId());
             }
             return;
