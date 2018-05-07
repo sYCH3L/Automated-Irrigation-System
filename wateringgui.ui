@@ -24,7 +24,7 @@
     <item>
      <widget class="QTabWidget" name="errorTab">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="homeTab">
        <attribute name="title">
@@ -49,28 +49,6 @@
             <pixmap resource="wateringresource.qrc">:/img/logo.png</pixmap>
            </property>
           </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="verticalLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>190</y>
-          <width>241</width>
-          <height>221</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>List of Connected Devices</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QListWidget" name="mDevList"/>
          </item>
         </layout>
        </widget>
@@ -161,6 +139,34 @@
          </item>
         </layout>
        </widget>
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>180</y>
+          <width>291</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Connected Devices</string>
+        </property>
+        <widget class="QWidget" name="verticalLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>271</width>
+           <height>201</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QListWidget" name="mDevList"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
       </widget>
       <widget class="QWidget" name="controlTab">
        <attribute name="title">
@@ -213,7 +219,7 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="forceIrrbtn">
               <property name="styleSheet">
                <string notr="true">QPushButton {
     background-color: #1C1C1C;
@@ -233,7 +239,7 @@ QPushButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="checkHumbtn">
               <property name="styleSheet">
                <string notr="true">QPushButton {
     background-color: #1C1C1C;
@@ -253,27 +259,7 @@ QPushButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
-    background-color: #1C1C1C;
-	color: white;
-    border-style: outset;
-    border-width: 2px;
-    border-color: #424242;
-}
-QPushButton:pressed {
-    background-color: #A4A4A4;
-    border-style: inset;
-}</string>
-              </property>
-              <property name="text">
-               <string>Shutdown Device</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="restartDvcbtn">
               <property name="styleSheet">
                <string notr="true">QPushButton {
     background-color: #1C1C1C;
@@ -614,7 +600,7 @@ QPushButton:pressed {
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_25">
+     <widget class="QLabel" name="copyright">
       <property name="text">
        <string>© Sinus Automated Systems</string>
       </property>

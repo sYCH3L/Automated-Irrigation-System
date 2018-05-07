@@ -41,6 +41,12 @@ private slots:
 
     void errorHandler(QString msg);
 
+    void on_checkHumbtn_clicked();
+
+    void on_forceIrrbtn_clicked();
+
+    void on_restartDvcbtn_clicked();
+
 signals:
     void devSelect_c(QString id);
     void devSelect_s(QString id);

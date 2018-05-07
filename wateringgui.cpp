@@ -18,6 +18,7 @@ WateringGUI::WateringGUI(QString ver, QWidget *parent) :
 
     connect(cntrl,SIGNAL(devConnected(QString)),this,SLOT(addDev(QString)));
     connect(cntrl,SIGNAL(devDisconnected(QString)),this,SLOT(removeDev(QString)));
+    connect(cntrl,SIGNAL(errorMsg(QString)),this,SLOT(errorHandler(QString)));
 
     connect(this,SIGNAL(devSelect_c(QString)),this,SLOT(loadcFrame(QString)));
     connect(this,SIGNAL(devSelect_s(QString)),this,SLOT(loadsFrame(QString)));
@@ -70,6 +71,7 @@ void WateringGUI::on_sDevList_currentIndexChanged(const QString &arg1)
 }
 void WateringGUI::errorHandler(QString msg)
 {
+    ui->errorTab->setCurrentIndex(3);
     ui->errorView->addItem(msg);
 }
 
@@ -150,4 +152,19 @@ void WateringGUI::on_setHum_clicked()
 void WateringGUI::on_sendCMD_clicked()
 {
     cntrl->blHndlr->write(ui->cDevList->currentText(),ui->customCMD->text());
+}
+
+void WateringGUI::on_checkHumbtn_clicked()
+{
+    cntrl->blHndlr->write(ui->cDevList->currentText(),"getHumidity");
+}
+
+void WateringGUI::on_forceIrrbtn_clicked()
+{
+    cntrl->blHndlr->write(ui->cDevList->currentText(),"irrigate");
+}
+
+void WateringGUI::on_restartDvcbtn_clicked()
+{
+    cntrl->blHndlr->write(ui->cDevList->currentText(),"restart");
 }
