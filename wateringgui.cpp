@@ -11,7 +11,7 @@ WateringGUI::WateringGUI(QString ver, QWidget *parent) :
 
     cntrlThread = new QThread();
     cntrl = new Control();
-    cntrl->moveToThread(cntrlThread);
+    //cntrl->moveToThread(cntrlThread);
 
     ui->sFrame->setEnabled(false);
     ui->cFrame->setEnabled(false);
