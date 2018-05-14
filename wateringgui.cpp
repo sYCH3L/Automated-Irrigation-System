@@ -42,14 +42,15 @@ void WateringGUI::addDev(QString id)
 }
 void WateringGUI::removeDev(QString id)
 {
-    ui->activeDev->setText(QString(cntrl->getActiveDev()));
-    ui->totalDev->setText(QString(cntrl->getTotalDev()));
+    if(!id.isEmpty())
+    {
+        ui->activeDev->setText(QString(cntrl->getActiveDev()));
+        ui->totalDev->setText(QString(cntrl->getTotalDev()));
 
-    ui->cDevList->removeItem(ui->cDevList->findText(id,Qt::MatchExactly));
-    ui->sDevList->removeItem(ui->sDevList->findText(id,Qt::MatchExactly));
-    QListWidgetItem *tmp;
-    tmp->setText(id);
-    ui->mDevList->removeItemWidget(tmp);
+        ui->cDevList->removeItem(ui->cDevList->findText(id,Qt::MatchExactly));
+        ui->sDevList->removeItem(ui->sDevList->findText(id,Qt::MatchExactly));
+        ui->mDevList->removeItemWidget(ui->mDevList->findItems(id,Qt::MatchExactly).first());
+    }
 
 
 }
@@ -82,10 +83,13 @@ void WateringGUI::on_cDevList_currentIndexChanged(const QString &arg1)
 }
 void WateringGUI::loadcFrame(QString id)
 {
-    ui->devID->setText(id);
-    ui->lastUpdate->setText(cntrl->dataHndlr->getData(id).getLatestTimeStamp());
-    ui->lastHum->setText(cntrl->dataHndlr->getData(id).getLatestValue());
-    ui->reqHum->setText(QString::number(cntrl->getSettings(id)->getReqHum()));
+    if(!id.isEmpty())
+    {
+        ui->devID->setText(id);
+        ui->lastUpdate->setText(cntrl->dataHndlr->getData(id).getLatestTimeStamp());
+        ui->lastHum->setText(cntrl->dataHndlr->getData(id).getLatestValue());
+        ui->reqHum->setText(QString::number(cntrl->getSettings(id)->getReqHum()));
+    }
 }
 void WateringGUI::loadsFrame(QString id)
 {

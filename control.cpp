@@ -130,7 +130,7 @@ void Control::initTimeout(QString id)
     auto dev = getSettings(id);
     if(dev != NULL)
     {
-        blHndlr->write(id,QString("TIMEOUT"));
+        //blHndlr->write(id,QString("TIMEOUT"));
     }
     else
     {
@@ -157,8 +157,10 @@ void Control::handleData(QString id, QByteArray data)
         }
         if(cmd.contains("HUM"))
         {
-            QString humidty = cmd.midRef(2);
-            emit errorMsg_(QString("Device(%1): Sent its humidity which is:%2").arg(id,humidty));
+            auto humidty = cmd.midRef(2).toDouble();
+            chooseAction(id,humidty);
+
+
         }
 
     }
