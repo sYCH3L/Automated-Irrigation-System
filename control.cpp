@@ -2,27 +2,20 @@
 
 Control::Control(QObject *parent) : QObject(parent)
 {
-    dataHndlrThread = new QThread();
-    blHndlrThread = new QThread();
-
     dataHndlr = new DataHandler();
     blHndlr = new bluetooth();
-
-    //dataHndlr->moveToThread(dataHndlrThread);
-    //blHndlr->moveToThread(blHndlrThread);
 
     connect(blHndlr,SIGNAL(newData(QString,QByteArray)),this,SLOT(handleData(QString,QByteArray)));
     connect(blHndlr,SIGNAL(dConnect(QString)),this,SLOT(connectDevice(QString)));
     connect(blHndlr,SIGNAL(dDisconnect(QString)),this,SLOT(deviceDisconnected(QString)));
-    connect(blHndlr,SIGNAL(errorMsg(QString)),this,SLOT(errorMsg_(QString)));
+   connect(blHndlr,SIGNAL(errorMsg(QString)),this,SLOT(errorMsg_(QString)));
 
 }
 Control::~Control()
 {
     delete dataHndlr;
     delete blHndlr;
-    delete dataHndlrThread;
-    delete blHndlrThread;
+
     qDeleteAll(deviceList);
 }
 int Control::getActiveDev()
@@ -45,7 +38,7 @@ void Control::registerNewDevice(QString id)
 
     if(deviceExists(id))
     {
-        connect(nDevice,SIGNAL(Timeout(QString)),this,SLOT(sendHumidty(QString)));
+        //connect(nDevice,SIGNAL(Timeout(QString)),this,SLOT(sendHumidty(QString)));
         emit devConnected(id);
     }
 
@@ -77,7 +70,7 @@ void Control::connectDevice(QString id)
     }
     else if(!isWaitingToBeRegistered(id))
     {
-         sendHumidty(id);
+        sendHumidty(id);
     }
 }
 bool Control::deviceExists(QString id)
@@ -137,7 +130,7 @@ void Control::initTimeout(QString id)
     auto dev = getSettings(id);
     if(dev != NULL)
     {
-          blHndlr->write(id,QString("TIMEOUT"));
+        blHndlr->write(id,QString("TIMEOUT"));
     }
     else
     {
@@ -164,13 +157,14 @@ void Control::handleData(QString id, QByteArray data)
         }
         if(cmd.contains("HUM"))
         {
-
+            QString humidty = cmd.midRef(2);
+            emit errorMsg_(QString("Device(%1): Sent its humidity which is:%2").arg(id,humidty));
         }
 
     }
     else
     {
-       blHndlr->disconnectDevice(id);
+        blHndlr->disconnectDevice(id);
     }
 }
 bool Control::isWaitingToBeRegistered(QString id)

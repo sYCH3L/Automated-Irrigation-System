@@ -16,7 +16,7 @@ public:
         m_connected = true;
         m_lastUpdate = QDateTime::currentDateTime().toString();
         m_reqHum = 50.0;
-        m_updateTimeout = 300000;
+        m_updateTimeout = 900000;
         m_lastHumidty = 0;
 
         updateTimer = new QTimer();
@@ -82,8 +82,6 @@ public:
 
     DataHandler *dataHndlr;
     bluetooth *blHndlr;
-    QThread *dataHndlrThread;
-    QThread *blHndlrThread;
     QList<QString> devicesToRegister;
 
 protected:
