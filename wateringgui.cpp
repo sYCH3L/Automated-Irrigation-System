@@ -91,6 +91,7 @@ void WateringGUI::loadcFrame(QString id)
         ui->lastUpdate->setText(cntrl->dataHndlr->getData(id).getLatestTimeStamp());
         ui->lastHum->setText(cntrl->dataHndlr->getData(id).getLatestValue());
         ui->reqHum->setText(QString::number(cntrl->getSettings(id)->getReqHum()));
+        ui->timeInterval->setValue(cntrl->getSettings(id)->getTimeout());
     }
 }
 void WateringGUI::loadsFrame(QString id)
