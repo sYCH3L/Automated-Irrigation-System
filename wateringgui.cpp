@@ -108,6 +108,10 @@ void WateringGUI::loadsFrame(QString id)
 
         //Delete old widget
         //ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
+//        if(!ui->groupBox_2->layout()->isEmpty())
+//        {
+//            ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
+//        }
         ui->listWidget_2->clear();
 
 
@@ -143,6 +147,8 @@ void WateringGUI::loadsFrame(QString id)
 
         QVBoxLayout *vbox = new QVBoxLayout();
         vbox->addWidget(chartView);
+
+        ui->groupBox_2->setLayout(vbox);
 
     }
     else
