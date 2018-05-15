@@ -193,6 +193,15 @@ void WateringGUI::on_errorTab_tabBarClicked(int index)
     {
         ui->uptime->setText(convertToTime(upTime.elapsed()));
     }
+    else if(index == 1)
+    {
+        loadcFrame(ui->cDevList->currentText());
+    }
+    else if(index == 2)
+    {
+        loadcFrame(ui->sDevList->currentText());
+    }
+
 }
 
 void WateringGUI::on_timeInterval_sliderReleased()

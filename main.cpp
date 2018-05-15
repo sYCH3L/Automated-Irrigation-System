@@ -1,7 +1,7 @@
 #include "wateringgui.h"
 #include <QApplication>
 
-#define VER "1.1.1"
+#define VER "1.0.1"
 
 
 int main(int argc, char *argv[])
