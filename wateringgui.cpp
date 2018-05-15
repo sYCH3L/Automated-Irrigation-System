@@ -93,6 +93,10 @@ void WateringGUI::loadcFrame(QString id)
         ui->reqHum->setText(QString::number(cntrl->getSettings(id)->getReqHum()));
         ui->timeInterval->setValue(cntrl->getSettings(id)->getTimeout());
     }
+    else
+    {
+        ui->cFrame->setEnabled(false);
+    }
 }
 void WateringGUI::loadsFrame(QString id)
 {
@@ -103,7 +107,7 @@ void WateringGUI::loadsFrame(QString id)
         QList<HumidtyData> list = tmp.getList();
 
         //Delete old widget
-        ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
+        //ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
         ui->listWidget_2->clear();
 
 
@@ -140,11 +144,11 @@ void WateringGUI::loadsFrame(QString id)
         QVBoxLayout *vbox = new QVBoxLayout();
         vbox->addWidget(chartView);
 
-        ui->groupBox_2->setLayout(vbox);
     }
     else
     {
         ui->errorView->addItem(QString("No data available for %1 device").arg(id));
+        //ui->sFrame->setEnabled(false);
     }
 
 
@@ -199,7 +203,7 @@ void WateringGUI::on_errorTab_tabBarClicked(int index)
     }
     else if(index == 2)
     {
-        loadcFrame(ui->sDevList->currentText());
+        loadsFrame(ui->sDevList->currentText());
     }
 
 }
@@ -218,4 +222,9 @@ void WateringGUI::on_timeInterval_sliderReleased()
             cntrl->blHndlr->write(ui->cDevList->currentText(),tx);
         }
     }
+}
+
+void WateringGUI::on_falseData_clicked()
+{
+    cntrl->falseData(ui->cDevList->currentText());
 }

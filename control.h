@@ -76,6 +76,7 @@ public:
     bool isWaitingToBeRegistered(QString id);
     void initIrrigation(QString id);
     void initTimeout(QString id);
+    void falseData(QString id);
 
     int getActiveDev();
     int getTotalDev() { return deviceList.size(); }

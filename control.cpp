@@ -8,7 +8,7 @@ Control::Control(QObject *parent) : QObject(parent)
     connect(blHndlr,SIGNAL(newData(QString,QByteArray)),this,SLOT(handleData(QString,QByteArray)));
     connect(blHndlr,SIGNAL(dConnect(QString)),this,SLOT(connectDevice(QString)));
     connect(blHndlr,SIGNAL(dDisconnect(QString)),this,SLOT(deviceDisconnected(QString)));
-   connect(blHndlr,SIGNAL(errorMsg(QString)),this,SLOT(errorMsg_(QString)));
+    connect(blHndlr,SIGNAL(errorMsg(QString)),this,SLOT(errorMsg_(QString)));
 
 }
 Control::~Control()
@@ -158,6 +158,7 @@ void Control::handleData(QString id, QByteArray data)
         if(cmd.contains("HUM"))
         {
             auto humidty = cmd.midRef(2).toDouble();
+            qDebug() << "Device with id:" << id << "send humidity: " << humidty;
             chooseAction(id,humidty);
 
 
@@ -169,6 +170,17 @@ void Control::handleData(QString id, QByteArray data)
         blHndlr->disconnectDevice(id);
     }
 }
+void Control::falseData(QString id)
+{
+    for(int i=0;i < 50; i++)
+    {
+        auto dub = QString::number(qrand()).toDouble();
+        dataHndlr->WriteData(id,HumidtyData(QDateTime::currentDateTime().toString(),dub));
+        getSettings(id)->setLastHum(dub);
+        getSettings(id)->setLastUpdt(QDateTime::currentDateTime().toString());
+    }
+}
+
 bool Control::isWaitingToBeRegistered(QString id)
 {
     for(auto &a : devicesToRegister)

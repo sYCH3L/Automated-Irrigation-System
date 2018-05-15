@@ -522,6 +522,19 @@ QPushButton:pressed {
           </property>
          </widget>
         </widget>
+        <widget class="QPushButton" name="falseData">
+         <property name="geometry">
+          <rect>
+           <x>690</x>
+           <y>340</y>
+           <width>91</width>
+           <height>29</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>False Data</string>
+         </property>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="statTab">

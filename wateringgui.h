@@ -55,6 +55,8 @@ private slots:
 
     void on_timeInterval_sliderReleased();
 
+    void on_falseData_clicked();
+
 signals:
     void devSelect_c(QString id);
     void devSelect_s(QString id);
