@@ -24,7 +24,7 @@
     <item>
      <widget class="QTabWidget" name="errorTab">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="homeTab">
        <attribute name="title">
@@ -389,8 +389,8 @@ QPushButton:pressed {
         <widget class="QGroupBox" name="infoBox">
          <property name="geometry">
           <rect>
-           <x>280</x>
-           <y>160</y>
+           <x>10</x>
+           <y>230</y>
            <width>321</width>
            <height>161</height>
           </rect>
@@ -476,6 +476,51 @@ QPushButton:pressed {
            </layout>
           </item>
          </layout>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_7">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>130</y>
+           <width>331</width>
+           <height>91</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Update Time Value(minutes)</string>
+         </property>
+         <widget class="QSlider" name="timeInterval">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>40</y>
+            <width>160</width>
+            <height>19</height>
+           </rect>
+          </property>
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>240</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>40</y>
+            <width>47</width>
+            <height>13</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>None</string>
+          </property>
+         </widget>
         </widget>
        </widget>
       </widget>
@@ -613,5 +658,22 @@ QPushButton:pressed {
  <resources>
   <include location="wateringresource.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>timeInterval</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>label_2</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>459</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

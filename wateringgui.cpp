@@ -6,8 +6,10 @@ WateringGUI::WateringGUI(QString ver, QWidget *parent) :
     ui(new Ui::WateringGUI)
 {
     ui->setupUi(this);
+    upTime.start();
 
     ui->label_13->setText(ver);
+    ui->uptime->setText(convertToTime(upTime.elapsed()));
 
     cntrlThread = new QThread();
     cntrl = new Control();
@@ -171,4 +173,39 @@ void WateringGUI::on_forceIrrbtn_clicked()
 void WateringGUI::on_restartDvcbtn_clicked()
 {
     cntrl->blHndlr->write(ui->cDevList->currentText(),"restart");
+}
+QString WateringGUI::convertToTime(qint64 time)
+{
+    if(time > 0)
+    {
+        auto seconds = (time / 1000) % 60;
+        auto minutes = (time / 1000) / 60;
+        auto hours = seconds / 3600;
+
+        return QString("H:%1 M:%2 S:%3").arg(QString::number(hours),QString::number(minutes),QString::number(seconds));
+    }
+    return QString("0");
+}
+void WateringGUI::on_errorTab_tabBarClicked(int index)
+{
+    if(index == 0)
+    {
+        ui->uptime->setText(convertToTime(upTime.elapsed()));
+    }
+}
+
+void WateringGUI::on_timeInterval_sliderReleased()
+{
+    if(!ui->cDevList->currentText().isEmpty())
+    {
+        auto conv = 60000 * ui->timeInterval->value();
+        auto obj = cntrl->getSettings(ui->cDevList->currentText());
+        if(obj != NULL)
+        {
+            obj->setTimeout(conv);
+            QString tx("ARV:%1");
+            tx.arg(QString::number(conv));
+            cntrl->blHndlr->write(ui->cDevList->currentText(),tx);
+        }
+    }
 }

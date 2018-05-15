@@ -5,6 +5,7 @@
 #include <control.h>
 #include <QThread>
 #include <QtCharts>
+#include <QElapsedTimer>
 
 namespace Ui {
 class WateringGUI;
@@ -19,6 +20,9 @@ public:
     ~WateringGUI();
     Control *cntrl;
     QThread *cntrlThread;
+    QElapsedTimer upTime;
+
+    QString convertToTime(qint64 time);
 
 public slots:
     void removeDev(QString id);
@@ -46,6 +50,10 @@ private slots:
     void on_forceIrrbtn_clicked();
 
     void on_restartDvcbtn_clicked();
+
+    void on_errorTab_tabBarClicked(int index);
+
+    void on_timeInterval_sliderReleased();
 
 signals:
     void devSelect_c(QString id);
