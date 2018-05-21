@@ -70,6 +70,10 @@ void WateringGUI::on_sDevList_currentIndexChanged(int index)
 void WateringGUI::on_sDevList_currentIndexChanged(const QString &arg1)
 {
     ui->sFrame->setEnabled(true);
+    if(!arg1.isEmpty())
+    {
+        cntrl->falseData(arg1);
+    }
     emit devSelect_s(arg1);
 }
 void WateringGUI::errorHandler(QString msg)
@@ -115,11 +119,20 @@ void WateringGUI::loadsFrame(QString id)
             QList<HumidtyData> list = tmp->getList();
 
             //Delete old widget
-            //ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
-//            if(!ui->groupBox_2->layout()->isEmpty())
-//            {
-//                ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
-//            }
+
+            if ( ui->groupBox_2->layout() != NULL )
+            {
+                QLayoutItem* item;
+                while ( ( item = ui->groupBox_2->layout()->takeAt( 0 ) ) != NULL )
+                {
+                    delete item->widget();
+                    delete item;
+                }
+                delete ui->groupBox_2->layout();
+            }
+
+
+
             ui->listWidget_2->clear();
 
 
@@ -129,8 +142,12 @@ void WateringGUI::loadsFrame(QString id)
             for(QList<HumidtyData>::iterator it = list.begin(); it != list.end(); it++)
             {
                 QDateTime date = QDateTime::fromString((*it).getTimeStamp() /*getTimeStamp()*/);
-                series->append(date.toMSecsSinceEpoch(),(*it).getValue());
-                ui->listWidget_2->addItem((*it).getTimeStamp());
+                QDateTime min = QDateTime::currentDateTime().addDays(-7);
+                if(min <= date) // last 7 days reports
+                {
+                    series->append(date.toMSecsSinceEpoch(),(*it).getValue());
+                    ui->listWidget_2->addItem((*it).getTimeStamp());
+                }
             }
 
             QChart *chart = new QChart();
@@ -138,7 +155,7 @@ void WateringGUI::loadsFrame(QString id)
             chart->addSeries(series);
             QDateTimeAxis *axisX = new QDateTimeAxis;
             axisX->setTickCount(10);
-            axisX->setFormat("MMM yyyy");
+            axisX->setFormat("MMMd");
             axisX->setTitleText("Date");
             chart->addAxis(axisX, Qt::AlignBottom);
             series->attachAxis(axisX);
@@ -157,17 +174,24 @@ void WateringGUI::loadsFrame(QString id)
             vbox->addWidget(chartView);
 
             ui->groupBox_2->setLayout(vbox);
+
         }
         else
         {
-            ui->errorView->addItem(QString("No data available for %1 device").arg(id));
+            if(!id.isEmpty())
+            {
+                ui->errorView->addItem(QString("No data available for %1 device").arg(id));
+            }
             ui->sFrame->setEnabled(false);
         }
 
     }
     else
     {
-        ui->errorView->addItem(QString("Nothing available for %1 device").arg(id));
+        if(!id.isEmpty())
+        {
+            ui->errorView->addItem(QString("Nothing available for %1 device").arg(id));
+        }
         ui->sFrame->setEnabled(false);
     }
 

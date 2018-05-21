@@ -175,7 +175,7 @@ void Control::falseData(QString id)
 {
     for(int i=0;i < 50; i++)
     {
-        auto dub = QString::number(qrand()).toDouble();
+        auto dub = QString::number(qrand() % 100).toDouble();
         dataHndlr->WriteData(id,HumidtyData(QDateTime::currentDateTime().toString(),dub));
         getSettings(id)->setLastHum(dub);
         getSettings(id)->setLastUpdt(QDateTime::currentDateTime().toString());
