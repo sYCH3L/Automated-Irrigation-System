@@ -4,26 +4,46 @@ DataHandler::DataHandler(QObject *parent) : QObject(parent)
 {
 
 }
-bool DataHandler::WriteData(QString id, HumidtyData dat)
+DataHandler::~DataHandler()
 {
-    Data tmp(id);
-    tmp.appData(dat);
-    dataHolder.push_back(tmp);
-    if(getData(id).getID() == id)
-    {
-        return true;
-    }
-    return false;
+    qDeleteAll(dataHolder);
+}
+bool DataHandler::isDataObject(QString id)
+{
+    return ((getData(id) != NULL) ? true : false);
 }
 
-Data DataHandler::getData(QString id)
+
+bool DataHandler::WriteData(QString id, HumidtyData dat)
+{
+
+    if(isDataObject(id))
+    {
+        auto obj = getData(id);
+        obj->appData(dat);
+        return true;
+    }
+    else
+    {
+        Data* tmp = new Data(id);
+        tmp->appData(dat);
+        dataHolder.push_back(tmp);
+        if(getData(id)->getID() == id)
+        {
+            return true;
+        }
+        return false;
+    }
+}
+
+Data *DataHandler::getData(QString id)
 {
     for(auto b : dataHolder)
     {
-        if(b.getID() == id)
+        if(b->getID() == id)
         {
             return b;
         }
     }
-    return Data(NULL);
+    return NULL;
 }

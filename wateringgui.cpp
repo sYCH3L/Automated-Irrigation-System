@@ -87,11 +87,17 @@ void WateringGUI::loadcFrame(QString id)
 {
     if(!id.isEmpty())
     {
-        ui->devID->setText(id);
-        ui->lastUpdate->setText(cntrl->dataHndlr->getData(id).getLatestTimeStamp());
-        ui->lastHum->setText(cntrl->dataHndlr->getData(id).getLatestValue());
-        ui->reqHum->setText(QString::number(cntrl->getSettings(id)->getReqHum()));
-        ui->timeInterval->setValue(cntrl->getSettings(id)->getTimeout());
+        auto tmp = cntrl->dataHndlr->getData(id);
+        auto tmpp = cntrl->getSettings(id);
+
+        if(tmp != NULL && tmpp != NULL)
+        {
+            ui->devID->setText(id);
+            ui->lastUpdate->setText(cntrl->dataHndlr->getData(id)->getLatestTimeStamp());
+            ui->lastHum->setText(cntrl->dataHndlr->getData(id)->getLatestValue());
+            ui->reqHum->setText(QString::number(cntrl->getSettings(id)->getReqHum()));
+            ui->timeInterval->setValue(cntrl->getSettings(id)->getTimeout());
+        }
     }
     else
     {
@@ -100,61 +106,69 @@ void WateringGUI::loadcFrame(QString id)
 }
 void WateringGUI::loadsFrame(QString id)
 {
-    Data tmp = cntrl->dataHndlr->getData(id);
-    if(tmp.hasData())
+    Data *tmp = cntrl->dataHndlr->getData(id);
+    if(tmp != NULL)
     {
-        QLineSeries *series = new QLineSeries();
-        QList<HumidtyData> list = tmp.getList();
-
-        //Delete old widget
-        //ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
-//        if(!ui->groupBox_2->layout()->isEmpty())
-//        {
-//            ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
-//        }
-        ui->listWidget_2->clear();
-
-
-
-
-        // create charts && add dates irrigated
-        for(auto a : list)
+        if(tmp->hasData())
         {
-            QDateTime date = QDateTime::fromString(a.getTimeStamp());
-            series->append(date.toMSecsSinceEpoch(),a.getValue());
-            ui->listWidget_2->addItem(a.getTimeStamp());
+            QLineSeries *series = new QLineSeries();
+            QList<HumidtyData> list = tmp->getList();
+
+            //Delete old widget
+            //ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
+//            if(!ui->groupBox_2->layout()->isEmpty())
+//            {
+//                ui->groupBox_2->layout()->removeItem(ui->groupBox_2->layout()->itemAt(0));
+//            }
+            ui->listWidget_2->clear();
+
+
+
+
+            // create charts && add dates irrigated
+            for(QList<HumidtyData>::iterator it = list.begin(); it != list.end(); it++)
+            {
+                QDateTime date = QDateTime::fromString((*it).getTimeStamp() /*getTimeStamp()*/);
+                series->append(date.toMSecsSinceEpoch(),(*it).getValue());
+                ui->listWidget_2->addItem((*it).getTimeStamp());
+            }
+
+            QChart *chart = new QChart();
+            chart->legend()->hide();
+            chart->addSeries(series);
+            QDateTimeAxis *axisX = new QDateTimeAxis;
+            axisX->setTickCount(10);
+            axisX->setFormat("MMM yyyy");
+            axisX->setTitleText("Date");
+            chart->addAxis(axisX, Qt::AlignBottom);
+            series->attachAxis(axisX);
+
+            QValueAxis *axisY = new QValueAxis;
+            axisY->setLabelFormat("%i");
+            axisY->setTitleText("Humidity");
+            chart->addAxis(axisY, Qt::AlignLeft);
+            series->attachAxis(axisY);
+            //chart->setTitle("Humidity in 7 days");
+
+            QChartView *chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing);
+
+            QVBoxLayout *vbox = new QVBoxLayout();
+            vbox->addWidget(chartView);
+
+            ui->groupBox_2->setLayout(vbox);
         }
-
-        QChart *chart = new QChart();
-        chart->legend()->hide();
-        chart->addSeries(series);
-        QDateTimeAxis *axisX = new QDateTimeAxis;
-        axisX->setTickCount(10);
-        axisX->setFormat("MMM yyyy");
-        axisX->setTitleText("Date");
-        chart->addAxis(axisX, Qt::AlignBottom);
-        series->attachAxis(axisX);
-
-        QValueAxis *axisY = new QValueAxis;
-        axisY->setLabelFormat("%i");
-        axisY->setTitleText("Humidity");
-        chart->addAxis(axisY, Qt::AlignLeft);
-        series->attachAxis(axisY);
-        //chart->setTitle("Humidity in 7 days");
-
-        QChartView *chartView = new QChartView(chart);
-        chartView->setRenderHint(QPainter::Antialiasing);
-
-        QVBoxLayout *vbox = new QVBoxLayout();
-        vbox->addWidget(chartView);
-
-        ui->groupBox_2->setLayout(vbox);
+        else
+        {
+            ui->errorView->addItem(QString("No data available for %1 device").arg(id));
+            ui->sFrame->setEnabled(false);
+        }
 
     }
     else
     {
-        ui->errorView->addItem(QString("No data available for %1 device").arg(id));
-        //ui->sFrame->setEnabled(false);
+        ui->errorView->addItem(QString("Nothing available for %1 device").arg(id));
+        ui->sFrame->setEnabled(false);
     }
 
 

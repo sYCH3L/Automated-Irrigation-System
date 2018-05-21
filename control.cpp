@@ -1,4 +1,5 @@
 #include "control.h"
+#define RAND_MAX 100
 
 Control::Control(QObject *parent) : QObject(parent)
 {

@@ -42,10 +42,12 @@ class DataHandler : public QObject
     Q_OBJECT
 public:
     explicit DataHandler(QObject *parent = nullptr);
-    Data getData(QString id);
+    ~DataHandler();
+    bool isDataObject(QString id);
+    Data *getData(QString id);
     bool WriteData(QString id, HumidtyData dat);
 private:
-    QList<Data> dataHolder;
+    QList<Data*> dataHolder;
 signals:
 
 public slots:
