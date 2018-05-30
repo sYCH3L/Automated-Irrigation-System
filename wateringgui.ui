@@ -22,9 +22,9 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <widget class="QTabWidget" name="errorTab">
+     <widget class="QTabWidget" name="tabs">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="homeTab">
        <attribute name="title">
@@ -522,19 +522,6 @@ QPushButton:pressed {
           </property>
          </widget>
         </widget>
-        <widget class="QPushButton" name="falseData">
-         <property name="geometry">
-          <rect>
-           <x>690</x>
-           <y>340</y>
-           <width>91</width>
-           <height>29</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>False Data</string>
-         </property>
-        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="statTab">
@@ -611,7 +598,7 @@ QPushButton:pressed {
         </widget>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="errorTab">
        <attribute name="title">
         <string>Error</string>
        </attribute>
@@ -652,6 +639,134 @@ QPushButton:pressed {
            </rect>
           </property>
          </widget>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="settingsTab">
+       <attribute name="title">
+        <string>Settings</string>
+       </attribute>
+       <widget class="QGroupBox" name="adminTools">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>200</y>
+          <width>301</width>
+          <height>161</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Adminstrative tools</string>
+        </property>
+        <widget class="QCheckBox" name="falseDataCheck">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>211</width>
+           <height>27</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>False Data on connection</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="falseData">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>161</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Append</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>251</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Append false data to active device</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_8">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>200</y>
+          <width>361</width>
+          <height>121</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Admin Powers</string>
+        </property>
+        <widget class="QWidget" name="horizontalLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>341</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Admin Password:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="adminPwLine"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="adminEnable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_9">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>221</width>
+          <height>141</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>General Settings</string>
+        </property>
+        <widget class="QLabel" name="label_9">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>191</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>No General Settings</string>
+         </property>
         </widget>
        </widget>
       </widget>

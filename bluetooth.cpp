@@ -90,6 +90,7 @@ void bluetooth::write(QString id, QString data)
         if(a->getName() == id)
         {
             a->write(data);
+            qDebug() << "Message:" << data << "has sent to device:" << id;
         }
     }
 }

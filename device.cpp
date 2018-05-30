@@ -15,7 +15,7 @@ Device::Device(QBluetoothDeviceInfo &info,QObject *parent) : QObject(parent), m_
 }
 Device::~Device()
 {
-    delete m_service;
+    if(m_service != NULL) {delete m_service;}
     m_control->disconnectFromDevice();
     delete m_control;
 }

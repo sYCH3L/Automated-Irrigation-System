@@ -1,5 +1,5 @@
 #include "control.h"
-#define RAND_MAX 100
+//#define RAND_MAX 100
 
 Control::Control(QObject *parent) : QObject(parent)
 {
@@ -124,7 +124,7 @@ void Control::chooseAction(QString id, double hum)
 }
 void Control::initIrrigation(QString id)
 {
-    blHndlr->write(id,QString("IRRIGATE"));
+    blHndlr->write(id,QString("irrigate"));
 }
 void Control::initTimeout(QString id)
 {
@@ -132,6 +132,7 @@ void Control::initTimeout(QString id)
     if(dev != NULL)
     {
         //blHndlr->write(id,QString("TIMEOUT"));
+        qDebug() << "Timeout was set for device:" << id;
     }
     else
     {
@@ -156,13 +157,27 @@ void Control::handleData(QString id, QByteArray data)
         {
             blHndlr->disconnectDevice(id);
         }
-        if(cmd.contains("HUM"))
+        if(cmd.contains("HUM:"))
         {
-            auto humidty = cmd.midRef(2).toDouble();
+            auto humidty = cmd.midRef(4).toDouble();
             qDebug() << "Device with id:" << id << "send humidity: " << humidty;
             chooseAction(id,humidty);
 
 
+        }
+        if(cmd.contains("ERR:"))
+        {
+            //Error Codes
+            //1 - Can't irrigate while irrigation process is active
+            auto err = cmd.midRef(4).toInt();
+            switch(err)
+            {
+                case 1:
+                emit errorMsg(QString("Error(%1): Can't initiate irrigation process while its already active").arg(id));
+                break;
+            default:
+                emit errorMsg(QString("Error(%1): Unhandled error").arg(id));
+            }
         }
 
     }

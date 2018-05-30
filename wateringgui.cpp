@@ -72,13 +72,16 @@ void WateringGUI::on_sDevList_currentIndexChanged(const QString &arg1)
     ui->sFrame->setEnabled(true);
     if(!arg1.isEmpty())
     {
-        cntrl->falseData(arg1);
+        if(ui->falseDataCheck->isChecked())
+        {
+            cntrl->falseData(arg1);
+        }
     }
     emit devSelect_s(arg1);
 }
 void WateringGUI::errorHandler(QString msg)
 {
-    ui->errorTab->setCurrentIndex(3);
+    ui->tabs->setCurrentIndex(3);
     ui->errorView->addItem(msg);
 }
 
@@ -235,7 +238,38 @@ QString WateringGUI::convertToTime(qint64 time)
     }
     return QString("0");
 }
-void WateringGUI::on_errorTab_tabBarClicked(int index)
+
+void WateringGUI::on_timeInterval_sliderReleased()
+{
+    if(!ui->cDevList->currentText().isEmpty())
+    {
+        auto conv = 60000 * ui->timeInterval->value();
+        auto obj = cntrl->getSettings(ui->cDevList->currentText());
+        if(obj != NULL)
+        {
+            obj->setTimeout(conv);
+            cntrl->blHndlr->write(ui->cDevList->currentText(),QString("ARV:%1").arg(QString::number(conv)));
+        }
+    }
+}
+void WateringGUI::on_adminEnable_clicked()
+{
+    if(ui->adminPwLine->text() == "maagia")
+    {
+        ui->adminTools->setEnabled(true);
+    }
+    else
+    {
+        ui->errorView->addItem(QString("Error: Wrong Admin password!"));
+    }
+}
+
+void WateringGUI::on_falseData_clicked()
+{
+    cntrl->falseData(ui->cDevList->currentText());
+}
+
+void WateringGUI::on_tabs_currentChanged(int index)
 {
     if(index == 0)
     {
@@ -250,25 +284,4 @@ void WateringGUI::on_errorTab_tabBarClicked(int index)
         loadsFrame(ui->sDevList->currentText());
     }
 
-}
-
-void WateringGUI::on_timeInterval_sliderReleased()
-{
-    if(!ui->cDevList->currentText().isEmpty())
-    {
-        auto conv = 60000 * ui->timeInterval->value();
-        auto obj = cntrl->getSettings(ui->cDevList->currentText());
-        if(obj != NULL)
-        {
-            obj->setTimeout(conv);
-            QString tx("ARV:%1");
-            tx.arg(QString::number(conv));
-            cntrl->blHndlr->write(ui->cDevList->currentText(),tx);
-        }
-    }
-}
-
-void WateringGUI::on_falseData_clicked()
-{
-    cntrl->falseData(ui->cDevList->currentText());
 }

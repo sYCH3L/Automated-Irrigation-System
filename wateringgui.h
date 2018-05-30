@@ -51,11 +51,13 @@ private slots:
 
     void on_restartDvcbtn_clicked();
 
-    void on_errorTab_tabBarClicked(int index);
-
     void on_timeInterval_sliderReleased();
 
+    void on_adminEnable_clicked();
+
     void on_falseData_clicked();
+
+    void on_tabs_currentChanged(int index);
 
 signals:
     void devSelect_c(QString id);
