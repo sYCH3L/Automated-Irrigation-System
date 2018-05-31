@@ -252,6 +252,7 @@ void WateringGUI::on_adminEnable_clicked()
     if(ui->adminPwLine->text() == "maagia")
     {
         ui->adminTools->setEnabled(true);
+        ui->advusr->setEnabled(true);
     }
     else
     {
