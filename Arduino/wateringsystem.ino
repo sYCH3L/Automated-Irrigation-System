@@ -4,7 +4,7 @@
 //Deklareerimine
 
 SoftwareSerial btSerial(9,10);
-SimpleTimer timer;
+SimpleTimer timer,tim;
 int timerID, timerIDD;
 int niiskustase = 0;
 int timerr = 6000;
@@ -12,7 +12,7 @@ int pIrr = 0;
 int isRegistered = 0;
 String command;
 
-enum CMD {HUMIDITY, REG, IRRIGATION, UNKNOWNN, ARV, RESTART};
+enum CMD {HUMIDITY, REG, IRRIGATION, UNKNOWNN, INT, RESTART, NOTCON};
 
 CMD getCommand(String command)
 {
@@ -28,8 +28,11 @@ CMD getCommand(String command)
   else if(command == "restart"){
     return RESTART;
   }
+  else if(command == "OK"){
+    return NOTCON;
+  }
   else if(command.indexOf("INT")>=0){//else if{(command.substring(0, 2) == "ARV")
-    return ARV;
+    return INT;
   }
   else{
     return UNKNOWNN;
@@ -107,6 +110,16 @@ void _setInterval()
   }
 }
 
+void _checkCon()
+{
+  btSerial.write("AT");
+}
+
+void _setCon()
+{
+  isRegistered = 0;
+}
+
 void setup() 
 {
   //BT setup
@@ -122,11 +135,13 @@ void setup()
   pinMode(A0, INPUT);
   digitalWrite(4,HIGH);
   digitalWrite(13,LOW);
+  tim.setInterval(600000,_checkCon);
 }
 
 void loop() 
 {
   timer.run();
+  tim.run();
   niiskustase = analogRead(A0);
   if(btSerial.available())
   {
@@ -142,12 +157,16 @@ void loop()
       case IRRIGATION:
         Irrigate();
         break;
-      case ARV:
+      case INT:
         _setInterval();
         break; 
       case RESTART:
         resetFunc();
         break;
+      case NOTCON:
+        _setCon();
+        break;
+        
     }
   }
 }
