@@ -53,8 +53,6 @@ void WateringGUI::removeDev(QString id)
         ui->sDevList->removeItem(ui->sDevList->findText(id,Qt::MatchExactly));
         ui->mDevList->removeItemWidget(ui->mDevList->findItems(id,Qt::MatchExactly).first());
     }
-
-
 }
 
 void WateringGUI::on_cDevList_currentIndexChanged(int index)
@@ -134,12 +132,7 @@ void WateringGUI::loadsFrame(QString id)
                 delete ui->groupBox_2->layout();
             }
 
-
-
             ui->listWidget_2->clear();
-
-
-
 
             // create charts && add dates irrigated
             for(QList<HumidtyData>::iterator it = list.begin(); it != list.end(); it++)
@@ -236,7 +229,7 @@ QString WateringGUI::convertToTime(qint64 time)
 
         return QString("H:%1 M:%2 S:%3").arg(QString::number(hours),QString::number(minutes),QString::number(seconds));
     }
-    return QString("0");
+    return QString("Error");
 }
 
 void WateringGUI::on_timeInterval_sliderReleased()
@@ -248,7 +241,7 @@ void WateringGUI::on_timeInterval_sliderReleased()
         if(obj != NULL)
         {
             obj->setTimeout(conv);
-            cntrl->blHndlr->write(ui->cDevList->currentText(),QString("ARV:%1").arg(QString::number(conv)));
+            cntrl->blHndlr->write(ui->cDevList->currentText(),QString("INT:%1").arg(QString::number(conv)));
         }
     }
 }
@@ -262,6 +255,7 @@ void WateringGUI::on_adminEnable_clicked()
     {
         ui->errorView->addItem(QString("Error: Wrong Admin password!"));
     }
+    ui->adminPwLine->clear();
 }
 
 void WateringGUI::on_falseData_clicked()
