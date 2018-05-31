@@ -8,6 +8,8 @@ WateringGUI::WateringGUI(QString ver, QWidget *parent) :
     ui->setupUi(this);
     upTime.start();
 
+    ui->tabs->setCurrentIndex(0);
+
     ui->label_13->setText(ver);
     ui->uptime->setText(convertToTime(upTime.elapsed()));
 
