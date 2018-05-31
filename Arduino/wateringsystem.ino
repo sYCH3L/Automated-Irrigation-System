@@ -135,7 +135,7 @@ void setup()
   pinMode(A0, INPUT);
   digitalWrite(4,HIGH);
   digitalWrite(13,LOW);
-  tim.setInterval(600000,_checkCon);
+  tim.setInterval(6000,_checkCon);
 }
 
 void loop() 
