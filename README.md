@@ -2,6 +2,6 @@
 Irrigation System with arduino and raspberry pi 3
 
 # Electronic Schemes 
-Coming Soon to wiki
+https://github.com/sYCH3L/Automated-Irrigation-System/wiki/Electronics
 # Components
-Coming soon to wiki
+https://github.com/sYCH3L/Automated-Irrigation-System/wiki/Components
