@@ -85,6 +85,9 @@ public:
     bluetooth *blHndlr;
     QList<QString> devicesToRegister;
 
+    QThread *btlThread;
+    QThread *dataThread;
+
 protected:
     QList<Devices*> deviceList;
 signals:

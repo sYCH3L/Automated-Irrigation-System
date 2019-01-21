@@ -5,11 +5,21 @@ Control::Control(QObject *parent) : QObject(parent)
 {
     dataHndlr = new DataHandler();
     blHndlr = new bluetooth();
+    dataThread = new QThread();
+    btlThread = new QThread();
+
+    dataHndlr->moveToThread(dataThread);
+    blHndlr->moveToThread(btlThread);
+
+    dataThread->start();
+    btlThread->start();
 
     connect(blHndlr,SIGNAL(newData(QString,QByteArray)),this,SLOT(handleData(QString,QByteArray)));
     connect(blHndlr,SIGNAL(dConnect(QString)),this,SLOT(connectDevice(QString)));
     connect(blHndlr,SIGNAL(dDisconnect(QString)),this,SLOT(deviceDisconnected(QString)));
     connect(blHndlr,SIGNAL(errorMsg(QString)),this,SLOT(errorMsg_(QString)));
+
+
 
 }
 Control::~Control()
